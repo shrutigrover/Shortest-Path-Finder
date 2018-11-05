@@ -39,9 +39,11 @@ def parse_input(input_data):
 
 def main():
     ### YOUR MAIN CODE GOES HERE
+    
     while True:
         input_command = sys.stdin.readline()
-        if input_command == '':
+       	
+	if input_command == '':
             break
         else :
             parse_input(input_command)

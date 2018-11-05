@@ -53,7 +53,14 @@ class Street:
         #remove duplicates
         vertices = list(set(final_intersects))
         vertices_local_dict = {}
-        if not bool(self.vertices_dict):
+
+	self.vertices_dict.clear();
+        i = 0
+        for value in vertices:
+            self.vertices_dict[i] = value
+            i = i+1
+
+        '''if not bool(self.vertices_dict):
 
             i = 0
             for value in vertices:
@@ -72,13 +79,13 @@ class Street:
 
             self.vertices_dict.clear()
             self.vertices_dict.update(vertices_local_dict)
-
+'''
         sys.stdout.write("V "+str(len(self.vertices_dict))+"\n");
-        sys.stdout.write("V = {\n")
-        for key in self.vertices_dict:
-            sys.stdout.write(" {}: {}\n".format(key,self.vertices_dict[key]))
+       # sys.stdout.write("V = {\n")
+        #for key in self.vertices_dict:
+         #   sys.stdout.write(" {}: {}\n".format(key,self.vertices_dict[key]))
             #vertice_string = vertice_string + str(key) + ":" + str(self.vertices_dict[key]) +"\n"
-        sys.stdout.write("}")
+        #sys.stdout.write("}")
 
     def isVertexInBetween(self,point1,point2,current):
         dxc = current[0] - point1[0]
@@ -154,7 +161,7 @@ class Street:
                     edge = edge+","+ str(key)+">"
             edges_set.add(edge)
         y = ",".join(edges_set)
-        sys.stdout.write("E {"+y+"}")
+        sys.stdout.write("E {"+y+"}\n")
         #if y != "":
         #    sys.stdout.write("E {"+ y+"}")
         #else:
@@ -238,6 +245,6 @@ class Street:
         b = map(list,b_set)
         #print "intersection points :::::",intersection_points
 
-        #return final_intersects
+        #final_intersects = [(0.0,0.0)]
         self.getVerticesOutput(final_intersects)
         self.getEdgesOutput(b,intersection_points,  list(set(final_intersects)))

@@ -6,6 +6,9 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -129,7 +132,8 @@ bool check_intersection(vector<int> &coord, int xcoord, int ycoord){
 }
 
 void generate_output(vector< vector<int> > &street_coord, vector<string> &streets){
-      string add_street_output = "";
+      
+      string add_street_output ;
       for(int i = 0 ; i < street_coord.size() ; i++){
           add_street_output = add_street_output + "a \"" +  streets[i] + "\" ";
           string coordinates ;
@@ -142,7 +146,8 @@ void generate_output(vector< vector<int> > &street_coord, vector<string> &street
           }
           add_street_output = add_street_output + coordinates + '\n';
       }
-      cout << add_street_output << '\n';
+      cout << add_street_output;
+      cout << "g" << '\n';
 }
 
 int main(int argc, char** argv) {
@@ -155,11 +160,11 @@ int main(int argc, char** argv) {
   unsigned int l_num;
   vector<int> street_line_num;
   vector< vector<int> > street_coord;
-
+  
   for (int i = 0; i < argc; ++i){
 
       stringstream ssValue;
-          cout << argv[i] << "\n ";
+     //     cout << argv[i] << "\n ";
       if (std::string(argv[i]) == "-s"){
       ssValue << argv[i+1];
       ssValue  >> sd;
@@ -175,20 +180,29 @@ int main(int argc, char** argv) {
 
       }
   }
+
   unsigned int wait_time = rand_wait_num(wd);
-
-
   unsigned int num_street = rand_street_num(sd);
   generate_streets(street, num_street);
-  cout << "no. of streets"<<num_street<<'\n';
+  //cout << "no. of streets"<<num_street<<'\n';
   unsigned int error_flag = 0;
-  //generate line segments for each streets
-  for (int j = 0; j < num_street; j++)
+  unsigned int count = 0;
+for (int j = 0; j < num_street; j++)
    {
        l_num = rand_line_segment_num(ld);
        street_line_num.push_back(l_num);
-       cout << "line -" << l_num << '\n';
-       int m = l_num;
+}  
+//generate line segments for each streets
+while(true){
+street_coord.clear();
+//street_line_num.clear(); 
+count++; 
+for (int j = 0; j < num_street; j++)
+   {
+      // l_num = rand_line_segment_num(ld);
+      // street_line_num.push_back(l_num);
+      // cout << "line -" << l_num << '\n';
+       int m = street_line_num[j];
        int x_coord;
        int y_coord;
        vector<int> coord;
@@ -197,7 +211,7 @@ int main(int argc, char** argv) {
          x_coord = rand_coordinate_value(cd);
          y_coord = rand_coordinate_value(cd);
 
-	      bool length_check = true;
+        bool length_check = true;
         length_check = check_zerolength(coord,x_coord,y_coord);
         bool intersect_check = true;
         if( m <= l_num - 2){ //one segment is already added
@@ -209,7 +223,7 @@ int main(int argc, char** argv) {
            m--;
            error_flag = 0;
          }else{
-           cerr << "Error  " << x_coord << "  " << y_coord << '\n';
+          // cout << "Error  " << x_coord << "  " << y_coord << '\n';
            if(error_flag == 25){
              cerr << "Error: failed to generate valid inputs for 25 simultaneous attempts";
              exit(1);
@@ -220,19 +234,27 @@ int main(int argc, char** argv) {
        street_coord.push_back(coord);
    }
 
-  for(int k = 0 ; k < street_line_num.size() ; k++){
+  /*for(int k = 0 ; k < street_line_num.size() ; k++){
     cout << street_line_num[k] << '\n';
-  }
+  }*/
   vector< vector<int> >::iterator row;
   vector<int>::iterator col;
-  for (row = street_coord.begin(); row != street_coord.end(); row++) {
+  /*for (row = street_coord.begin(); row != street_coord.end(); row++) {
       cout << "street :";
       for (col = row->begin(); col != row->end(); col++) {
           cout << *col << "  ";
       }
       cout << '\n';
-  }
+  }*/
+  if(count != 1){
+	string remove_streets;
+	for(int a = 0 ; a < street.size(); a++){
+		remove_streets = "r \""+street[a]+"\"";
+		cout << remove_streets << '\n';
+	}	
+}
   generate_output(street_coord, street);
-
+  sleep(wait_time);
+}
   return 0;
 }

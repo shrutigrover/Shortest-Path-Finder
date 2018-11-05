@@ -167,7 +167,7 @@ int main()
   while(!cin.eof()){
 
       getline (cin,input_string);
-
+      cout << input_string << '\n';
       unsigned space = input_string.find(" ");
       command = input_string.substr(0,space);
       value = input_string.substr(space+1,input_string.size());
