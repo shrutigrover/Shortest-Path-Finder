@@ -18,6 +18,7 @@ def parse_input(input_data):
                     street_data.addStreet(street_name.lower(),coordinates, 'a')
                 else:
                     sys.stderr.write("Error : Street Format incorrect\n")
+		    sys.stdout.flush()
             elif command == 'c':
                 coordinates = street_data.getCoordinates(input_data)
                 if coordinates != False:
@@ -26,27 +27,31 @@ def parse_input(input_data):
                         street_data.addStreet(street_name.lower(), coordinates,'c')
                 else:
                     sys.stderr.write("Error : Street Format incorrect\n")
+		    sys.stdout.flush()
             elif command == 'r':
                 street_data.removeStreet(street_name.lower())
             elif command == 'g':
                 street_data.generateGraph()
             else:
                 sys.stderr.write('Error : Command not found\n')
+		sys.stdout.flush()
         else:
             sys.stderr.write('Error : Input Format not correct\n')
+	    sys.stdout.flush()
     except IndexError:
         return
 
 def main():
     ### YOUR MAIN CODE GOES HERE
     
-    while True:
+     while(True):
         input_command = sys.stdin.readline()
-       	
+     	#print(input_command)
+	#input_command.strip()  	
 	if input_command == '':
-            break
+           break
         else :
-            parse_input(input_command)
-    sys.exit(0)
+       	   parse_input(input_command)
+    #sys.exit(0)
 if __name__ == '__main__':
     main()

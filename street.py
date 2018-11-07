@@ -10,6 +10,7 @@ class Street:
         if command == 'a':
             if street_name in self.street_dict:
                 sys.stderr.write("Error : street already exists\n")
+		sys.stdout.flush()
             else :
                 self.street_dict[street_name] = coordinates
         else :
@@ -22,6 +23,7 @@ class Street:
                 return "SUCCESS"
         else:
             sys.stderr.write("Error : 'c' or 'r' specified for a street that does not exist\n")
+	    sys.stdout.flush()
 
     def getCoordinates(self, input_string):
         input_string = input_string.strip()
@@ -80,7 +82,8 @@ class Street:
             self.vertices_dict.clear()
             self.vertices_dict.update(vertices_local_dict)
 '''
-        sys.stdout.write("V "+str(len(self.vertices_dict))+"\n");
+        sys.stdout.write("V "+str(len(self.vertices_dict))+"\n")
+	sys.stdout.flush()
        # sys.stdout.write("V = {\n")
         #for key in self.vertices_dict:
          #   sys.stdout.write(" {}: {}\n".format(key,self.vertices_dict[key]))
@@ -162,6 +165,7 @@ class Street:
             edges_set.add(edge)
         y = ",".join(edges_set)
         sys.stdout.write("E {"+y+"}\n")
+	sys.stdout.flush()
         #if y != "":
         #    sys.stdout.write("E {"+ y+"}")
         #else:
