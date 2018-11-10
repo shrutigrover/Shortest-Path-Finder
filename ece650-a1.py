@@ -47,6 +47,9 @@ def main():
         input_command = sys.stdin.readline()
         if input_command == '':
            break
+	elif "Error" in input_command:
+	   sys.stderr.write(input_command)
+	   break
         else :
        	   parse_input(input_command)
      sys.exit(0)

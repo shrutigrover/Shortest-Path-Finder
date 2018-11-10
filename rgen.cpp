@@ -190,28 +190,14 @@ bool check_overlap(vector<int> &coord, int xcoord, int ycoord){
     return true;
 }
 
-bool check_overlap_allstreets(vector< vector<int> > &allstreets, int xcoord, int ycoord){
+/*bool check_overlap_allstreets(vector< vector<int> > &allstreets, int xcoord, int ycoord){
+    vector<int> v;
+    for(int i = 0 ; i < allstreets.size() ; i++){
+      for(int j = 0 ; j < allstreets[i] ; j++){
 
-}
-
-void generate_output(vector< vector<int> > &street_coord, vector<string> &streets){
-
-      string add_street_output ;
-      for(unsigned int i = 0 ; i < street_coord.size() ; i++){
-          add_street_output = add_street_output + "a \"" +  streets[i] + "\" ";
-          string coordinates ;
-          for(unsigned int j = 0; j < street_coord[i].size() ; j=j+2){
-	    stringstream x;
-	    stringstream y;
-	    x << street_coord[i][j];
-	    y << street_coord[i][j+1];
-            coordinates =coordinates+"("+ x.str() + "," + y.str() + ")";
-          }
-          add_street_output = add_street_output + coordinates + '\n';
       }
-      cout << add_street_output;
-      cout << "g" << '\n';
-}
+    }
+}*/
 
 int main(int argc, char** argv) {
 
