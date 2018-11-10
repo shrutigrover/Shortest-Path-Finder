@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cmath>
 
 using namespace std;
 
@@ -133,11 +134,19 @@ bool check_overlap(vector<int> &coord, int xcoord, int ycoord){
     int dyl;
 
     int k = coord.size();
-    int x1 = coord[k - 4];
-    int y1 = coord[k - 3];
-    int x2 = coord[k - 2];
-    int y2 = coord[k - 1];
-    cout << x1 << " " << y1 << " " << x2 << " " << y2 <<'\n';
+	//cout << "size " << k;
+    int x1;
+    int x2;
+    int y1;
+    int y2;
+ 
+    if(k-4 >= 0 && k-3 >= 0 && k-2 >= 0 && k-1 >= 0){
+    x1 = coord[k-4];
+    y1 = coord[k-3];
+    x2 = coord[k-2];
+    y2 = coord[k-1];
+}
+    //cout << x1 << " " << y1 << " " << x2 << " " << y2 <<'\n';
     //x2 = k - 2, y2 = k - 1, x1 = k - 4 , y1 = k-3
 
         dxc = xcoord - x1;
@@ -147,7 +156,7 @@ bool check_overlap(vector<int> &coord, int xcoord, int ycoord){
         dyl = y2 - y1;
 
         int cross = round(dxc*dyl) - round(dyc*dxl);
-        cout << dxc << " " << dyc << " " <<dxl << " " <<dyl;
+        //cout << dxc << " " << dyc << " " <<dxl << " " <<dyl;
         if(cross != 0){
             //check slopes
             return false;
@@ -168,22 +177,19 @@ bool check_overlap(vector<int> &coord, int xcoord, int ycoord){
                 m2 = (ycoord - y2)/(xcoord - x2);
             }
 
-            cout << m1 << " " << m2 <<'\n';
+            //cout << m1 << " " << m2 <<'\n';
 
         if(abs(dxl) >= abs(dyl)){
             if(dxl > 0){
-                cout << "return 1";
                 return (x1 <= xcoord && xcoord <= x2) || (m1 == m2);
             }else{
-                cout << "retrun 2";
                 return (x2 <= xcoord && xcoord <= x1) || (m1 == m2);
             }
         }else{
             if(dyl > 0){
-                cout << "retrun 3";
                 return (y1 <= ycoord && ycoord <= y2) || (m1 == m2);
             }else{
-                cout << "retrun 4";
+               
                 return (y2 <= ycoord && ycoord <= y1) || (m1 == m2);
             }
         }
@@ -267,7 +273,7 @@ for (int j = 0; j < num_street; j++)
         bool isOverlap = false;
         if( m <= l_num - 2){ //one segment is already added
           intersect_check = check_intersection(coord, x_coord, y_coord);
-          isOverlap = check_overlap(coord, x_coord, y_coord);
+          //isOverlap = check_overlap(coord, x_coord, y_coord);
         }
          if(length_check && intersect_check && !isOverlap){
            coord.push_back(x_coord);
