@@ -174,11 +174,10 @@ int main(int argc, char** argv) {
       ssValue  >> ld;
       }else if(string(argv[i]) == "-l"){
       ssValue << argv[i+1];
-                  ssValue  >> wd;
+      ssValue  >> wd;
       }else if(string(argv[i]) == "-c"){
       ssValue << argv[i+1];
-                  ssValue  >> cd;
-
+      ssValue  >> cd;
       }
   }
 
@@ -226,7 +225,7 @@ for (int j = 0; j < num_street; j++)
          }else{
           // cout << "Error  " << x_coord << "  " << y_coord << '\n';
            if(error_flag == 25){
-             cout << "Error: failed to generate valid inputs for 25 simultaneous attempts";
+             cout << "Error: failed to generate valid inputs for 25 simultaneous attempts" << endl;
              exit(1);
            }
            error_flag = error_flag + 1;
@@ -235,9 +234,6 @@ for (int j = 0; j < num_street; j++)
        street_coord.push_back(coord);
    }
 
-  /*for(int k = 0 ; k < street_line_num.size() ; k++){
-    cout << street_line_num[k] << '\n';
-  }*/
   vector< vector<int> >::iterator row;
   vector<int>::iterator col;
   
@@ -247,7 +243,7 @@ for (int j = 0; j < num_street; j++)
 		remove_streets = "r \""+street[a]+"\"";
 		cout << remove_streets << endl;
 	}	
-}
+  }
 
      //a output 
       string add_street_output ;
