@@ -93,11 +93,6 @@ void generate_streets( vector<string> &street , unsigned int street_num)
 
 }
 
-
-/*bool check_partial_overlaps(vector<> allCoord,){
-  return false;
-}*/
-
 bool check_zerolength(vector<int> &coord, int xcoord, int ycoord){
 
   int last_ycoord_index = coord.size();
@@ -131,8 +126,76 @@ bool check_intersection(vector<int> &coord, int xcoord, int ycoord){
   return true;
 }
 
+bool check_overlap(vector<int> &coord, int xcoord, int ycoord){
+    int dxc;
+    int dyc;
+    int dxl;
+    int dyl;
+
+    int k = coord.size();
+    int x1 = coord[k - 4];
+    int y1 = coord[k - 3];
+    int x2 = coord[k - 2];
+    int y2 = coord[k - 1];
+    cout << x1 << " " << y1 << " " << x2 << " " << y2 <<'\n';
+    //x2 = k - 2, y2 = k - 1, x1 = k - 4 , y1 = k-3
+
+        dxc = xcoord - x1;
+        dyc = ycoord - y1;
+
+        dxl = x2 - x1;
+        dyl = y2 - y1;
+
+        int cross = round(dxc*dyl) - round(dyc*dxl);
+        cout << dxc << " " << dyc << " " <<dxl << " " <<dyl;
+        if(cross != 0){
+            //check slopes
+            return false;
+        }
+
+        double m1 = 0;
+            if(x2 == x1)//x2 == x1
+            {
+                //slope is undefined
+            }else{
+                m1 = (y2 - y1)/(x2 - x1);
+            }
+
+            double m2 = 0;
+            if(xcoord == x2){
+                //slope is undefined
+            }else{
+                m2 = (ycoord - y2)/(xcoord - x2);
+            }
+
+            cout << m1 << " " << m2 <<'\n';
+
+        if(abs(dxl) >= abs(dyl)){
+            if(dxl > 0){
+                cout << "return 1";
+                return (x1 <= xcoord && xcoord <= x2) || (m1 == m2);
+            }else{
+                cout << "retrun 2";
+                return (x2 <= xcoord && xcoord <= x1) || (m1 == m2);
+            }
+        }else{
+            if(dyl > 0){
+                cout << "retrun 3";
+                return (y1 <= ycoord && ycoord <= y2) || (m1 == m2);
+            }else{
+                cout << "retrun 4";
+                return (y2 <= ycoord && ycoord <= y1) || (m1 == m2);
+            }
+        }
+    return true;
+}
+
+bool check_overlap_allstreets(vector< vector<int> > &allstreets, int xcoord, int ycoord){
+
+}
+
 void generate_output(vector< vector<int> > &street_coord, vector<string> &streets){
-      
+
       string add_street_output ;
       for(unsigned int i = 0 ; i < street_coord.size() ; i++){
           add_street_output = add_street_output + "a \"" +  streets[i] + "\" ";
@@ -192,12 +255,12 @@ for (int j = 0; j < num_street; j++)
 {
        l_num = rand_line_segment_num(ld);
        street_line_num.push_back(l_num);
-}  
+}
 //generate line segments for each streets
 while(true){
 street_coord.clear();
-//street_line_num.clear(); 
-count++; 
+//street_line_num.clear();
+count++;
 for (int j = 0; j < num_street; j++)
    {
       // l_num = rand_line_segment_num(ld);
@@ -215,10 +278,12 @@ for (int j = 0; j < num_street; j++)
         bool length_check = true;
         length_check = check_zerolength(coord,x_coord,y_coord);
         bool intersect_check = true;
+        bool isOverlap = false;
         if( m <= l_num - 2){ //one segment is already added
           intersect_check = check_intersection(coord, x_coord, y_coord);
+          isOverlap = check_overlap(coord, x_coord, y_coord);
         }
-         if(length_check && intersect_check){
+         if(length_check && intersect_check && !isOverlap){
            coord.push_back(x_coord);
            coord.push_back(y_coord);
            m--;
@@ -240,16 +305,16 @@ for (int j = 0; j < num_street; j++)
   }*/
   vector< vector<int> >::iterator row;
   vector<int>::iterator col;
-  
+
   if(count != 1){
 	string remove_streets;
 	for(int a = 0 ; a < street.size(); a++){
 		remove_streets = "r \""+street[a]+"\"";
 		cout << remove_streets << endl;
-	}	
+	}
 }
 
-     //a output 
+     //a output
       string add_street_output ;
       for(int i = 0 ; i < street_coord.size() ; i++){
           add_street_output =  "a \"" +  street[i] + "\" ";
