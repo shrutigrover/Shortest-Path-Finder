@@ -10,7 +10,7 @@ class Street:
         if command == 'a':
             if street_name in self.street_dict:
                 sys.stderr.write("Error : street already exists\n")
-		sys.stdout.flush()
+                sys.stdout.flush()
             else :
                 self.street_dict[street_name] = coordinates
         else :
@@ -23,7 +23,7 @@ class Street:
                 return "SUCCESS"
         else:
             sys.stderr.write("Error : 'c' or 'r' specified for a street that does not exist\n")
-	    sys.stdout.flush()
+            sys.stdout.flush()
 
     def getCoordinates(self, input_string):
         input_string = input_string.strip()
@@ -61,33 +61,11 @@ class Street:
         for value in vertices:
             self.vertices_dict[i] = value
             i = i+1
-
-        '''if not bool(self.vertices_dict):
-
-            i = 0
-            for value in vertices:
-                self.vertices_dict[i] = value
-                i = i+1
-        else:
-            for key in self.vertices_dict:
-                if self.vertices_dict[key] in vertices:
-                    vertices_local_dict[key] = self.vertices_dict[key]
-                j = key+1
-
-            for value in vertices:
-                if value not in self.vertices_dict.values():
-                    vertices_local_dict[j] = value
-                    j = j+1
-
-            self.vertices_dict.clear()
-            self.vertices_dict.update(vertices_local_dict)
-'''
         sys.stdout.write("V "+str(len(self.vertices_dict))+"\n")
-	sys.stdout.flush()
-       # sys.stdout.write("V = {\n")
+        sys.stdout.flush()
+        #sys.stdout.write("V = {\n")
         #for key in self.vertices_dict:
-         #   sys.stdout.write(" {}: {}\n".format(key,self.vertices_dict[key]))
-            #vertice_string = vertice_string + str(key) + ":" + str(self.vertices_dict[key]) +"\n"
+        #    sys.stdout.write(" {}: {}\n".format(key,self.vertices_dict[key]))
         #sys.stdout.write("}")
 
     def isVertexInBetween(self,point1,point2,current):
@@ -139,15 +117,6 @@ class Street:
                      isBetween = self.isVertexInBetween(values[0],values[1],vertex)
                      #print "in between -->",isBetween
                      if isBetween:
-                         '''if vertex in intersections:
-                             p1 = [values[0],vertex]
-                             p2 = [vertex,values[0]]
-                             p3 = [values[1],vertex]
-                             p4 = [vertex,values[1]]
-                             if p1 not in final_edges and p2 not in final_edges:
-                                 final_edges.append(p2)
-                             if p3 not in final_edges and p4 not in final_edges:
-                                 final_edges.append(p4)'''
                          break
             if not isBetween:
                 if values not in final_edges:
@@ -165,7 +134,7 @@ class Street:
             edges_set.add(edge)
         y = ",".join(edges_set)
         sys.stdout.write("E {"+y+"}\n")
-	sys.stdout.flush()
+        sys.stdout.flush()
         #if y != "":
         #    sys.stdout.write("E {"+ y+"}")
         #else:
@@ -220,7 +189,7 @@ class Street:
         intersections = []
         for i in intersection_points:
             intersections.append(i[0])
-        #
+
         #print final_edges
 
         #print "intersections ::",intersections
