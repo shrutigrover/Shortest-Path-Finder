@@ -33,21 +33,6 @@ void Graph::addEdge(int u, int v)
     adj[v].push_back(u);
 }
 
-void Graph::printGraph()
-{
-    list<int>::iterator i;
-    for (int v = 0; v < V; ++v)
-    {
-        cout << "\n Adjacency list of vertex " << v << "\n head ";
-        for ( auto x : adj[v])
-        {
-           cout << "-> " << x;
-        }
-
-        cout << "\n";
-    }
-}
-
 bool Graph::BFS(int src, int dst, int pred[], int dist[])
 {
   bool *visited = new bool[V];

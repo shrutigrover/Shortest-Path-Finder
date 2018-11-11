@@ -86,7 +86,7 @@ int rand_coordinate_value (unsigned int k)
 void generate_streets( vector<string> &street , unsigned int street_num)
 {
     string name = "a";
-    for (int i=0; i < street_num; i++)
+    for (unsigned int i=0; i < street_num; i++)
     {
         street.push_back(name);
         name = name +"a";
@@ -241,12 +241,14 @@ return false;
 
 bool check_overlap_allstreets(vector< vector<int> > &allstreets, vector<int> &coord, int xcoord, int ycoord){
     int k = coord.size();
-    int x3 = coord[k-2];
-    int y3 = coord[k-1];
+    if(k>=2){
+    	int x3 = coord[k-2];
+    	int y3 = coord[k-1];
+	
 
     vector<int> v;
-    for(int i = 0 ; i < allstreets.size() ; i++){
-      for(int j = 0 ; j <= allstreets[i].size() - 4 ; j = j+2){
+    for(unsigned int i = 0 ; i < allstreets.size() ; i++){
+      for(unsigned int j = 0 ; j <= allstreets[i].size() - 4 ; j = j+2){
 
          int x1 = allstreets[i][j];
          int y1 = allstreets[i][j+1];
@@ -259,6 +261,7 @@ bool check_overlap_allstreets(vector< vector<int> > &allstreets, vector<int> &co
          }
       }
     }
+}
     return false;
 }
 
@@ -302,17 +305,18 @@ int main(int argc, char** argv) {
   //cout << "no. of streets"<<num_street<<'\n';
   unsigned int error_flag = 0;
   unsigned int count = 0;
-for (int j = 0; j < num_street; j++)
+for (unsigned int j = 0; j < num_street; j++)
 {
        l_num = rand_line_segment_num(ld);
        street_line_num.push_back(l_num);
 }
 //generate line segments for each streets
-while(true){
+
+while(!cin.eof()){
 street_coord.clear();
 //street_line_num.clear();
 count++;
-for (int j = 0; j < num_street; j++)
+for (unsigned int j = 0; j < num_street; j++)
    {
       // l_num = rand_line_segment_num(ld);
       // street_line_num.push_back(l_num);
@@ -365,7 +369,7 @@ for (int j = 0; j < num_street; j++)
 
   if(count != 1){
 	string remove_streets;
-	for(int a = 0 ; a < street.size(); a++){
+	for(unsigned int a = 0 ; a < street.size(); a++){
 		remove_streets = "r \""+street[a]+"\"";
 		cout << remove_streets << endl;
 	}
@@ -373,10 +377,10 @@ for (int j = 0; j < num_street; j++)
 
      //a output
       string add_street_output ;
-      for(int i = 0 ; i < street_coord.size() ; i++){
+      for(unsigned int i = 0 ; i < street_coord.size() ; i++){
           add_street_output =  "a \"" +  street[i] + "\" ";
           string coordinates ;
-          for(int j = 0; j < street_coord[i].size() ; j=j+2){
+          for(unsigned int j = 0; j < street_coord[i].size() ; j=j+2){
 	    stringstream x;
 	    stringstream y;
 	    x << street_coord[i][j];
