@@ -128,10 +128,6 @@ bool check_intersection(vector<int> &coord, int xcoord, int ycoord){
 }
 
 bool check_overlap(vector<int> &coord, int xcoord, int ycoord){
-    int dxc;
-    int dyc;
-    int dxl;
-    int dyl;
 
     int k = coord.size();
 	//cout << "size " << k;
@@ -139,21 +135,21 @@ bool check_overlap(vector<int> &coord, int xcoord, int ycoord){
     int x2;
     int y1;
     int y2;
- 
+
     if(k-4 >= 0 && k-3 >= 0 && k-2 >= 0 && k-1 >= 0){
-    x1 = coord[k-4];
-    y1 = coord[k-3];
-    x2 = coord[k-2];
-    y2 = coord[k-1];
-}
+      x1 = coord[k-4];
+      y1 = coord[k-3];
+      x2 = coord[k-2];
+      y2 = coord[k-1];
+    }
     //cout << x1 << " " << y1 << " " << x2 << " " << y2 <<'\n';
     //x2 = k - 2, y2 = k - 1, x1 = k - 4 , y1 = k-3
 
-        dxc = xcoord - x1;
-        dyc = ycoord - y1;
+        int dxc = xcoord - x1;
+        int dyc = ycoord - y1;
 
-        dxl = x2 - x1;
-        dyl = y2 - y1;
+        int dxl = x2 - x1;
+        int dyl = y2 - y1;
 
         int cross = round(dxc*dyl) - round(dyc*dxl);
         //cout << dxc << " " << dyc << " " <<dxl << " " <<dyl;
@@ -163,21 +159,19 @@ bool check_overlap(vector<int> &coord, int xcoord, int ycoord){
         }
 
         double m1 = 0;
-            if(x2 == x1)//x2 == x1
-            {
-                //slope is undefined
-            }else{
-                m1 = (y2 - y1)/(x2 - x1);
-            }
+        if(x2 == x1)//x2 == x1
+        {
+            //slope is undefined
+        }else{
+            m1 = (y2 - y1)/(x2 - x1);
+        }
 
-            double m2 = 0;
-            if(xcoord == x2){
-                //slope is undefined
-            }else{
-                m2 = (ycoord - y2)/(xcoord - x2);
-            }
-
-            //cout << m1 << " " << m2 <<'\n';
+        double m2 = 0;
+        if(xcoord == x2){
+            //slope is undefined
+        }else{
+            m2 = (ycoord - y2)/(xcoord - x2);
+        }
 
         if(abs(dxl) >= abs(dyl)){
             if(dxl > 0){
@@ -189,21 +183,86 @@ bool check_overlap(vector<int> &coord, int xcoord, int ycoord){
             if(dyl > 0){
                 return (y1 <= ycoord && ycoord <= y2) || (m1 == m2);
             }else{
-               
+
                 return (y2 <= ycoord && ycoord <= y1) || (m1 == m2);
             }
         }
     return true;
 }
 
-/*bool check_overlap_allstreets(vector< vector<int> > &allstreets, int xcoord, int ycoord){
+bool check_if_overlap(int x1,int y1,int x2,int y2,int x3,int y3,int xcoord,int ycoord){
+  double m1 = 0;
+  if(x1 == x2){
+    //slope is undefined
+  }else{
+    m1 = (y2-y1)/(x2-x1);
+  }
+
+  double m2 = 0;
+  if(xcoord == x3){
+    //slope is undefined
+  }else{
+    m2 = (ycoord-y3)/(xcoord-x3);
+  }
+
+  if(m1 == m2){
+    //check if xcoord yccoord lies between the line segment
+    int dxc = xcoord - x1;
+    int dyc = ycoord - y1;
+
+    int dxl = x2 - x1;
+    int dyl = y2 - y1;
+
+    int cross = round(dxc*dyl) - round(dyc*dxl);
+
+    if(cross != 0){
+        return false;
+    }
+
+    if(abs(dxl) >= abs(dyl)){
+        if(dxl > 0){
+            return (x1 <= xcoord && xcoord <= x2);
+        }else{
+            return (x2 <= xcoord && xcoord <= x1);
+        }
+    }else{
+        if(dyl > 0){
+            return (y1 <= ycoord && ycoord <= y2);
+        }else{
+            return (y2 <= ycoord && ycoord <= y1);
+        }
+    }
+
+  }else{
+    return false;
+  }
+return false;
+}
+
+bool check_overlap_allstreets(vector< vector<int> > &allstreets, vector<int> &coord, int xcoord, int ycoord){
+    int k = coord.size();
+    int x3 = coord[k-2];
+    int y3 = coord[k-1];
+
     vector<int> v;
     for(int i = 0 ; i < allstreets.size() ; i++){
-      for(int j = 0 ; j < allstreets[i] ; j++){
+      for(int j = 0 ; j <= allstreets[i].size() - 4 ; j = j+2){
 
+         int x1 = allstreets[i][j];
+         int y1 = allstreets[i][j+1];
+         int x2 = allstreets[i][j+2];
+         int y2 = allstreets[i][j+3];
+
+         bool isOverlap = check_if_overlap(x1,y1,x2,y2,x3,y3,xcoord,ycoord);
+         if(isOverlap){
+           return true;
+         }
       }
     }
-}*/
+    return false;
+}
+
+
 
 int main(int argc, char** argv) {
 
@@ -271,11 +330,17 @@ for (int j = 0; j < num_street; j++)
         length_check = check_zerolength(coord,x_coord,y_coord);
         bool intersect_check = true;
         bool isOverlap = false;
+        bool any_partial_overlap = false;
+
         if( m <= l_num - 2){ //one segment is already added
           intersect_check = check_intersection(coord, x_coord, y_coord);
-          //isOverlap = check_overlap(coord, x_coord, y_coord);
+          isOverlap = check_overlap(coord, x_coord, y_coord);
+          if(street_coord.size() > 1){
+            any_partial_overlap = check_overlap_allstreets(street_coord, coord, x_coord, y_coord);
+          }
         }
-         if(length_check && intersect_check && !isOverlap){
+
+         if(length_check && intersect_check && !isOverlap && !any_partial_overlap){
            coord.push_back(x_coord);
            coord.push_back(y_coord);
            m--;
