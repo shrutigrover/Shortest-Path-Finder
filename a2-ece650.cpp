@@ -17,9 +17,6 @@ public:
     // function to add an edge to graph
     void addEdge(int v, int w);
 
-    //function to print the Graph
-    void printGraph();
-
     // prints BFS traversal from a given source s
     bool BFS(int src, int dst, int pred[], int dist[]);
 
