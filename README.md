@@ -1,6 +1,6 @@
 ## Find shortest path between point A and point B of two same or different streets
 
-Here, I have used Breadth-First-Search Algorithm to find the shortest. Other famous algorithms for the same are Bellman-Ford and Floyd-Warshall.
+Here, I have used Breadth-First-Search Algorithm to find the shortest path. Other famous algorithms for the same are Bellman-Ford and Floyd-Warshall.
 
 #### Task:  
 Mention the following as command line arguments (k is an integer):
